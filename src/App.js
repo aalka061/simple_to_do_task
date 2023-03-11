@@ -19,13 +19,15 @@ function SearchBar({ inputValue, handleInputChange, handleSubmit }) {
     </div>
   );
 }
-function ToDo({ title }) {
+function ToDo({ title, onDelete }) {
   return (
     <div>
       <tr>
         <td>{title}</td>
         <td>
-          <button type="submit">Delete</button>
+          <button type="submit" onClick={onDelete}>
+            Delete
+          </button>
           <button type="submit">Edit</button>
         </td>
       </tr>
@@ -33,7 +35,7 @@ function ToDo({ title }) {
   );
 }
 
-function ToDosList({ toDoList }) {
+function ToDosList({ toDoList, onDelete }) {
   return (
     <div>
       <table>
@@ -42,7 +44,11 @@ function ToDosList({ toDoList }) {
           <th>Action</th>
         </tr>
         {toDoList.map((item) => (
-          <ToDo title={item.title} />
+          <ToDo
+            title={item.title}
+            key={item.id}
+            onDelete={() => onDelete(item.id)}
+          />
         ))}
       </table>
     </div>
@@ -57,8 +63,12 @@ function App() {
   };
   function handleSubmit(e) {
     e.preventDefault();
-    const list = [...toDoList, ...[{ title: userInput }]];
+    const list = [...toDoList, ...[{ id: uuidv4(), title: userInput }]];
     setToDoList(list);
+  }
+  function handleItemDeleltion(id) {
+    const newTodos = toDoList.filter((item) => item.id !== id);
+    setToDoList(newTodos);
   }
 
   return (
@@ -68,7 +78,7 @@ function App() {
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
       />
-      <ToDosList toDoList={toDoList} />
+      <ToDosList toDoList={toDoList} onDelete={handleItemDeleltion} />
     </div>
   );
 }

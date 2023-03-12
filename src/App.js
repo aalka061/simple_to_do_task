@@ -7,17 +7,17 @@ function SearchBar({ inputValue, handleInputChange, handleSubmit }) {
   return (
     <div className="flex items-center justify-center">
       <form onSubmit={handleSubmit}>
-        <div className="container ">
+        <div className="mb-4">
           <input
             style={{ marginTop: 50 }}
-            className="border border-gray-800 rounded-none w-3/4 py-2 px-4 "
+            className="border border-gray-800 rounded-none  py-2 px-20 "
             type="text"
             placeholder="Enter Title"
             value={inputValue}
             onChange={handleInputChange}
           ></input>
           <button
-            className="py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-r-md"
+            className="py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-none"
             type="submit"
           >
             Add

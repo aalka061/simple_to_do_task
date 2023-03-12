@@ -5,16 +5,24 @@ import { v4 as uuidv4 } from "uuid";
 
 function SearchBar({ inputValue, handleInputChange, handleSubmit }) {
   return (
-    <div>
+    <div className="flex items-center justify-center">
       <form onSubmit={handleSubmit}>
-        <input
-          style={{ marginTop: 50 }}
-          type="text"
-          placeholder="Enter Title"
-          value={inputValue}
-          onChange={handleInputChange}
-        ></input>
-        <button type="submit">Add</button>
+        <div className="container ">
+          <input
+            style={{ marginTop: 50 }}
+            className="border border-gray-800 rounded-none w-3/4 py-2 px-4 "
+            type="text"
+            placeholder="Enter Title"
+            value={inputValue}
+            onChange={handleInputChange}
+          ></input>
+          <button
+            className="py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-r-md"
+            type="submit"
+          >
+            Add
+          </button>
+        </div>
       </form>
     </div>
   );
@@ -37,41 +45,53 @@ function ToDo({ id, title, onDelete, onEdit }) {
 
   // how to update toDoList with the new title??
   return (
-    <div>
-      <tr>
-        <td>
-          <input
-            value={editedTitle}
-            disabled={isEditDisabled}
-            onChange={handleEditInput}
-          />
-        </td>
-        <td>
-          <button type="submit" onClick={onDelete}>
-            Delete
+    <tr>
+      <td className="border px-4 py-2">
+        <input
+          value={editedTitle}
+          disabled={isEditDisabled}
+          onChange={handleEditInput}
+          className="border border-gray-800 rounded-none py-2 px-4 disabled:bg-blue-200 disabled:opacity-50"
+        />
+      </td>
+      <td className="border px-4 py-2">
+        <button
+          type="submit"
+          onClick={onDelete}
+          className="py-2 px-5 bg-red-300 hover:bg-blue-600 text-white font-bold rounded-full"
+        >
+          Delete
+        </button>
+        {isEditDisabled ? (
+          <button
+            type="submit"
+            className="py-2 px-5 bg-blue-300 hover:bg-blue-600 text-white font-bold rounded-full"
+            onClick={handleEditButton}
+          >
+            Edit
           </button>
-          {isEditDisabled ? (
-            <button type="submit" onClick={handleEditButton}>
-              Edit
-            </button>
-          ) : (
-            <button type="submit" onClick={handleSave}>
-              Save
-            </button>
-          )}
-        </td>
-      </tr>
-    </div>
+        ) : (
+          <button
+            className="py-2 px-5 bg-blue-300 hover:bg-blue-600 text-white font-bold rounded-full"
+            type="submit"
+            onClick={handleSave}
+          >
+            Save
+          </button>
+        )}
+      </td>
+    </tr>
   );
 }
 
 function ToDosList({ toDoList, onDelete, onEdit }) {
   return (
-    <div>
-      <table>
-        <tr>
-          <th>Title</th>
-          <th>Action</th>
+    <div class="flex justify-center">
+      {" "}
+      <table className="table-auto  border-collapse border border-gray-400  text-center">
+        <tr className="dark:bg-gray-800 dark:text-white">
+          <th className="px-4 py-2">Title</th>
+          <th className="px-4 py-2">Action</th>
         </tr>
         {toDoList.map((item) => (
           <ToDo
@@ -95,7 +115,12 @@ function App() {
   };
   function handleSubmit(e) {
     e.preventDefault();
-    const list = [...toDoList, ...[{ id: uuidv4(), title: userInput }]];
+
+    const list = userInput
+      ? [...toDoList, ...[{ id: uuidv4(), title: userInput }]]
+      : [...toDoList];
+    setUserInput("");
+
     setToDoList(list);
   }
   function handleItemDeleltion(id) {

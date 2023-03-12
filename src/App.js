@@ -19,9 +19,10 @@ function SearchBar({ inputValue, handleInputChange, handleSubmit }) {
     </div>
   );
 }
-function ToDo({ title, onDelete }) {
+function ToDo({ id, title, onDelete, onEdit }) {
   let [isEditDisabled, setIsEditDisabled] = useState(true);
   let [editedTitle, setEditedTitle] = useState(title);
+
   function handleEditButton() {
     isEditDisabled ? setIsEditDisabled(false) : setIsEditDisabled(true);
   }
@@ -29,6 +30,12 @@ function ToDo({ title, onDelete }) {
   function handleEditInput(e) {
     setEditedTitle(e.target.value);
   }
+  function handleSave(e) {
+    onEdit(id, editedTitle);
+    setIsEditDisabled(true);
+  }
+
+  // how to update toDoList with the new title??
   return (
     <div>
       <tr>
@@ -48,7 +55,7 @@ function ToDo({ title, onDelete }) {
               Edit
             </button>
           ) : (
-            <button type="submit" onClick={handleEditButton}>
+            <button type="submit" onClick={handleSave}>
               Save
             </button>
           )}
@@ -58,7 +65,7 @@ function ToDo({ title, onDelete }) {
   );
 }
 
-function ToDosList({ toDoList, onDelete }) {
+function ToDosList({ toDoList, onDelete, onEdit }) {
   return (
     <div>
       <table>
@@ -70,7 +77,9 @@ function ToDosList({ toDoList, onDelete }) {
           <ToDo
             title={item.title}
             key={item.id}
+            id={item.id}
             onDelete={() => onDelete(item.id)}
+            onEdit={onEdit}
           />
         ))}
       </table>
@@ -94,6 +103,13 @@ function App() {
     setToDoList(newTodos);
   }
 
+  function handleItemEditing(id, title) {
+    let toDo = toDoList.find((item) => item.id === id);
+    toDo.item = title;
+    const list = [...toDoList];
+    setToDoList(list);
+  }
+
   return (
     <div>
       <SearchBar
@@ -101,7 +117,11 @@ function App() {
         handleInputChange={handleInputChange}
         handleSubmit={handleSubmit}
       />
-      <ToDosList toDoList={toDoList} onDelete={handleItemDeleltion} />
+      <ToDosList
+        toDoList={toDoList}
+        onDelete={handleItemDeleltion}
+        onEdit={handleItemEditing}
+      />
     </div>
   );
 }

@@ -20,15 +20,38 @@ function SearchBar({ inputValue, handleInputChange, handleSubmit }) {
   );
 }
 function ToDo({ title, onDelete }) {
+  let [isEditDisabled, setIsEditDisabled] = useState(true);
+  let [editedTitle, setEditedTitle] = useState(title);
+  function handleEditButton() {
+    isEditDisabled ? setIsEditDisabled(false) : setIsEditDisabled(true);
+  }
+
+  function handleEditInput(e) {
+    setEditedTitle(e.target.value);
+  }
   return (
     <div>
       <tr>
-        <td>{title}</td>
+        <td>
+          <input
+            value={editedTitle}
+            disabled={isEditDisabled}
+            onChange={handleEditInput}
+          />
+        </td>
         <td>
           <button type="submit" onClick={onDelete}>
             Delete
           </button>
-          <button type="submit">Edit</button>
+          {isEditDisabled ? (
+            <button type="submit" onClick={handleEditButton}>
+              Edit
+            </button>
+          ) : (
+            <button type="submit" onClick={handleEditButton}>
+              Save
+            </button>
+          )}
         </td>
       </tr>
     </div>

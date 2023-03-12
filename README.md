@@ -68,3 +68,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# simple_to_do_task
+
+## First To do list using react for me :)
+
+I did it on my own without any tutorials. More to be done in the future to make it better and include a backend datatabse to save the tasks. Here is what is learned so far:
+
+- usage of props
+- usage of states
+- usage of components and relation between them
+- usage of tailwind css (gives you so much control, I like it )
